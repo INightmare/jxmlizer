@@ -16,11 +16,14 @@
 
 package org.inightmare.xmlizer.reflection;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.inightmare.xmlizer.XmlizerException;
 
 /**
@@ -135,20 +138,27 @@ public class ReflectionUtils {
     public static void setProperty(Object target, String propertyName, Object value) {
         Method getter = retrieveGetter(target.getClass(), propertyName);
         Method setter = retrieveSetter(target.getClass(), propertyName, getter.getReturnType());
+        
         try {
-            setter.invoke(target, value);
-        } catch (ReflectiveOperationException ex) {
+            setter.invoke(target, value); 
+        } catch (IllegalAccessException ex) {
+            throw new XmlizerException("Unable to set property " + propertyName + " on " + target.getClass(), ex);
+        } catch (IllegalArgumentException ex) {
+            throw new XmlizerException("Unable to set property " + propertyName + " on " + target.getClass(), ex);
+        } catch (InvocationTargetException ex) {
             throw new XmlizerException("Unable to set property " + propertyName + " on " + target.getClass(), ex);
         }
     }
     
     public static Object getProperty(Object target, String propertyName) {
-        
         Method getter = retrieveGetter(target.getClass(), propertyName);
-        
         try {
-           return getter.invoke(target);
-        } catch (ReflectiveOperationException ex) {
+            return getter.invoke(target);
+        } catch (IllegalAccessException ex) {
+            throw new XmlizerException("Unable to get property " + propertyName + " from " + target.getClass(), ex);
+        } catch (IllegalArgumentException ex) {
+            throw new XmlizerException("Unable to get property " + propertyName + " from " + target.getClass(), ex);
+        } catch (InvocationTargetException ex) {
             throw new XmlizerException("Unable to get property " + propertyName + " from " + target.getClass(), ex);
         }
     

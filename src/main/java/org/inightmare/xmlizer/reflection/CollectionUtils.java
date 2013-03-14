@@ -21,6 +21,8 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.inightmare.xmlizer.XmlizerException;
 
 /**
@@ -31,10 +33,12 @@ public class CollectionUtils {
     
     public static Collection defaultCollectionImplementationFor(Class<?> collectionType) {
         
-        if (!collectionType.isInterface()) { // TODO: Handle abstract types
+        if (!collectionType.isInterface()) { 
             try {
                 return (Collection) collectionType.newInstance();
-            } catch (ReflectiveOperationException ex) {
+            } catch (InstantiationException ex) {
+                throw new XmlizerException("Could not instantiate collection", ex);
+            } catch (IllegalAccessException ex) {
                 throw new XmlizerException("Could not instantiate collection", ex);
             }
         }

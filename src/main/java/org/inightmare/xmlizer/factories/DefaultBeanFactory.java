@@ -38,7 +38,9 @@ public class DefaultBeanFactory implements BeanFactory {
     public Object instantiate(Class<?> type) {
         try {
             return type.newInstance();
-        } catch (ReflectiveOperationException ex) {
+        } catch (InstantiationException ex) {
+            return null;
+        } catch (IllegalAccessException ex) {
             return null;
         }
     }
