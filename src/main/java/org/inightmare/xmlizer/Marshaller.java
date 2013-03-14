@@ -18,6 +18,8 @@ package org.inightmare.xmlizer;
 
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -55,10 +57,14 @@ public class Marshaller {
             
             writer.writeEndDocument();
         } catch (XMLStreamException ex) {
-            throw new XmlizerException("Unable to create streaming writer", ex);
-        } catch (ReflectiveOperationException ex) {
+            throw new XmlizerException("Error occured while writting", ex);
+        } catch (IllegalAccessException ex) {
             throw new XmlizerException("Error while trying to read a property", ex);
-        }
+        } catch (IllegalArgumentException ex) {
+            throw new XmlizerException("Error while trying to read a property", ex);
+        } catch (InvocationTargetException ex) {
+            throw new XmlizerException("Error while trying to read a property", ex);
+        } 
     }
     
     public void addAlias(Class<?> type, String attributeName, String alias) {
