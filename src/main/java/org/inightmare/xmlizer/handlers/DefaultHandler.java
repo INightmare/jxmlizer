@@ -38,7 +38,7 @@ public class DefaultHandler implements TypeHandler {
     public void marshal(Property property, Object value, XMLStreamWriter writer, WriterContext context) throws XMLStreamException {
         if (value != null) {
             writer.writeStartElement(property.getName());
-            MarshallerUtils.writeTypeInfoIfNeeded(value, property, writer);
+            writeTypeInfoIfNeeded(value, property, writer);
             
             context.writeObject(property, value);
             
@@ -103,6 +103,10 @@ public class DefaultHandler implements TypeHandler {
         }
         
         return type;
+    }
+
+    protected void writeTypeInfoIfNeeded(Object value, Property property, XMLStreamWriter writer) throws XMLStreamException {
+        MarshallerUtils.writeTypeInfoIfNeeded(value.getClass(), property, writer);
     }
 
 }

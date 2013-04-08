@@ -47,6 +47,15 @@ public class DefaultAccessor implements Accessor {
             }
             
             collection.add(propertyValue);
+        } else if (Map.class.isAssignableFrom(propertyType)) {
+            Map map = (Map) ReflectionUtils.getProperty(holder, propertyName);
+            
+            if (map == null) {
+                map = (Map) propertyValue;
+                ReflectionUtils.setProperty(holder, propertyName, map);
+            }
+            
+            map.putAll((Map)propertyValue);
         } else {
             ReflectionUtils.setProperty(holder, propertyName, propertyValue);
         }

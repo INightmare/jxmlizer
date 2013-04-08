@@ -16,6 +16,7 @@
 
 package org.inightmare.xmlizer.misc;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,12 +31,7 @@ public class TypeRegistry {
         types.add(type);
     }
     
-    public Class<?> determineType(String typeSimpleName) {
-        for (Class<?> currentType : types) {
-            if (currentType.getSimpleName().equalsIgnoreCase(typeSimpleName)) {
-                return currentType;
-            }
-        }
-        return null;
+    public Set<Class<?>> getTypes() {
+        return Collections.unmodifiableSet(types);
     }
 }

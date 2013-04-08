@@ -27,10 +27,16 @@ import org.inightmare.xmlizer.reflection.ReflectionUtils;
  */
 public class MarshallerUtils {
 
-    public static void writeTypeInfoIfNeeded(Object value, Property property, XMLStreamWriter writer) throws XMLStreamException {
-        if (!property.getSimpleType().isPrimitive() && !value.getClass().equals(property.getSimpleType())) {
+    public static void writeTypeInfoIfNeeded(Class valueType, Property property, XMLStreamWriter writer) throws XMLStreamException {
+        if (shouldWriteTypeInfo(property, valueType)) {
             writer.writeAttribute(XmlConstants.XML_SCHEMA_INSTANCE_PREFIX, XmlConstants.XML_SCHEMA_INSTANCE_NAMESPACE, XmlConstants.XML_TYPE,
-                    ReflectionUtils.decapitalize(value.getClass().getSimpleName()));
+                    ReflectionUtils.decapitalize(valueType.getSimpleName()));
         }
+    }
+
+    private static boolean shouldWriteTypeInfo(Property property, Class valueType) {
+        return !property.getSimpleType().isPrimitive() // never for primitive types
+                && !valueType.equals(property.getSimpleType()) // only when actual type is different from declared type
+                && !valueType.getSimpleName().isEmpty(); // Only when simple name is available (otherwise it's likely an enum (inner class?)
     }
 }

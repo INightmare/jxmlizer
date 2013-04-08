@@ -20,6 +20,7 @@ import java.util.List;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import org.inightmare.xmlizer.misc.Aliasor;
+import org.inightmare.xmlizer.misc.DefaultTypeNamingStrategy;
 import org.inightmare.xmlizer.misc.Handlers;
 import org.inightmare.xmlizer.misc.TypeRegistry;
 import org.inightmare.xmlizer.reflection.Property;
@@ -35,6 +36,7 @@ public class WriterContext {
     Handlers<Class<?>, Accessor> accessors = new Handlers<Class<?>, Accessor>();
     XMLStreamWriter writer;
     Aliasor aliasor = new Aliasor();
+    TypeNamingStrategy typeNamingStrategy = new DefaultTypeNamingStrategy();
     
     
     public void writeObject(Property property, Object object) throws XMLStreamException {

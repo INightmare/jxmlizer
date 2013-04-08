@@ -20,6 +20,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.lang.reflect.WildcardType;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -120,7 +121,14 @@ public class ReflectionUtils {
         if (type.getActualTypeArguments().length == 0) {
             throw new IllegalArgumentException("No generic type arguments found on " + type + " return type");
         }
-        return (Class) type.getActualTypeArguments()[0];
+        if (type.getActualTypeArguments()[0] instanceof Class) {
+            return (Class<?>) type.getActualTypeArguments()[0];
+        } else if (type.getActualTypeArguments()[0] instanceof WildcardType) {
+            WildcardType wtype = (WildcardType)type.getActualTypeArguments()[0];
+            return (Class<?>)wtype.getUpperBounds()[0];
+        } else {
+            throw new IllegalArgumentException("Unable to determine generic type");
+        }
     }
     
     public static Class<?> getSecondGenericType(Type sourceType) {
@@ -128,7 +136,14 @@ public class ReflectionUtils {
         if (type.getActualTypeArguments().length == 0) {
             throw new IllegalArgumentException("No generic type arguments found on " + type + " return type");
         }
-        return (Class) type.getActualTypeArguments()[1];
+        if (type.getActualTypeArguments()[1] instanceof Class) {
+            return (Class<?>) type.getActualTypeArguments()[0];
+        } else if (type.getActualTypeArguments()[1] instanceof WildcardType) {
+            WildcardType wtype = (WildcardType)type.getActualTypeArguments()[1];
+            return (Class<?>)wtype.getUpperBounds()[0];
+        } else {
+            throw new IllegalArgumentException("Unable to determine generic type");
+        }
     }
     
     public static Class<?> getFirstGenericFromReturnType(Method method) {
@@ -138,6 +153,11 @@ public class ReflectionUtils {
     public static void setProperty(Object target, String propertyName, Object value) {
         Method getter = retrieveGetter(target.getClass(), propertyName);
         Method setter = retrieveSetter(target.getClass(), propertyName, getter.getReturnType());
+        
+        if (setter == null) {
+            Logger.getLogger("ReflectionUtils").log(Level.SEVERE, "Unable to set property: " + propertyName + " on " + target.getClass().getName());
+            return;
+        }
         
         try {
             setter.invoke(target, value); 

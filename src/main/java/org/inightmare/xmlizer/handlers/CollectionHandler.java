@@ -59,7 +59,7 @@ public class CollectionHandler implements TypeHandler {
             Property elementProperty = new Property(property.getName(), ReflectionUtils.getFirstGenericType(property.getType()));
             
             writer.writeStartElement(property.getName());
-            MarshallerUtils.writeTypeInfoIfNeeded(val, elementProperty, writer);
+            writeTypeInfoIfNeeded(val, elementProperty, writer);
             context.writeObject(elementProperty, val);
             writer.writeEndElement();
         }
@@ -72,6 +72,10 @@ public class CollectionHandler implements TypeHandler {
     public Object unmarshal(Property property, Node node, ReaderContext context) {
         Property prop = new Property(property.getName(), ReflectionUtils.getFirstGenericType(property.getType()));
         return context.readObject(prop, node);
+    }
+
+    protected void writeTypeInfoIfNeeded(Object val, Property elementProperty, XMLStreamWriter writer) throws XMLStreamException {
+        MarshallerUtils.writeTypeInfoIfNeeded(val.getClass(), elementProperty, writer);
     }
     
 }

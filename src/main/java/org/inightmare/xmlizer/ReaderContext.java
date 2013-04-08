@@ -18,6 +18,7 @@ package org.inightmare.xmlizer;
 
 import java.util.List;
 import org.inightmare.xmlizer.misc.Aliasor;
+import org.inightmare.xmlizer.misc.DefaultTypeNamingStrategy;
 import org.inightmare.xmlizer.misc.Handlers;
 import org.inightmare.xmlizer.misc.TypeRegistry;
 import org.inightmare.xmlizer.reflection.Property;
@@ -35,6 +36,7 @@ public class ReaderContext {
     Handlers<Class<?>, BeanFactory> factories = new Handlers<Class<?>, BeanFactory>();
     Handlers<Class<?>, Accessor> accessors = new Handlers<Class<?>, Accessor>();
     TypeRegistry typeRegistry = new TypeRegistry();
+    TypeNamingStrategy typeNamingStrategy = new DefaultTypeNamingStrategy();
     
     
     public Object readObject(Property property, Node node) {
@@ -72,6 +74,6 @@ public class ReaderContext {
     }
     
     public Class<?> determineType(String typeName) {
-        return typeRegistry.determineType(typeName);
+        return typeNamingStrategy.getTypeFromName(typeRegistry, typeName);
     }
 }

@@ -17,8 +17,6 @@
 package org.inightmare.xmlizer;
 
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.inightmare.xmlizer.reflection.Property;
@@ -86,12 +84,15 @@ public class Unmarshaller {
         readerContext.handlers.addHandler(typeHandler);
     }
 
+    public void setNamingStrategy(TypeNamingStrategy namingStrategy) {
+        readerContext.typeNamingStrategy = namingStrategy;
+    }
+    
     public Object unmarshal(Document document) {
         Node rootNode = document.getFirstChild();
         String rootNodeName = rootNode.getNodeName();
-        Class<?> rootType = readerContext.typeRegistry.determineType(rootNodeName);
+        Class<?> rootType = readerContext.typeNamingStrategy.getTypeFromName(readerContext.typeRegistry, rootNodeName);
         TypeHandler handler = readerContext.handlers.findHandler(rootType);
-        BeanFactory factory = readerContext.factories.findHandler(rootType);
         
         return handler.unmarshal(new Property(rootNodeName, rootType), rootNode, readerContext);
     }

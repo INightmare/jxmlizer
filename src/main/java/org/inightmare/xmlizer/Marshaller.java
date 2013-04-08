@@ -18,8 +18,6 @@ package org.inightmare.xmlizer;
 
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
@@ -87,8 +85,12 @@ public class Marshaller {
         writerContext.handlers.addHandler(typeHandler);
     }
 
+    public void setNamingStrategy(TypeNamingStrategy namingStrategy) {
+        writerContext.typeNamingStrategy = namingStrategy;
+    }
+    
     private void marshalObject(XMLStreamWriter writer, Object object) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, XMLStreamException {
-        String name = ReflectionUtils.decapitalize(object.getClass().getSimpleName());
+        String name = writerContext.typeNamingStrategy.getTypeName(object.getClass());
         writer.writeStartElement(name);
         writerContext.writeObject(new Property(name, object.getClass()), object);
         writer.writeEndElement();

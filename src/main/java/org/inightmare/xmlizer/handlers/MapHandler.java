@@ -73,7 +73,7 @@ public class MapHandler implements TypeHandler {
         writer.writeStartElement(MAP_VALUE_TAG_NAME);
         writer.writeStartElement(ReflectionUtils.decapitalize(declaredValueType.getSimpleName()));
         Property valueProperty = new Property(ReflectionUtils.decapitalize(valueType.getSimpleName()), valueType);
-        MarshallerUtils.writeTypeInfoIfNeeded(entryValue, property, writer);
+        writeTypeInfoIfNeeded( entryValue, property, writer);
         
         context.writeObject(valueProperty, entry.getValue());
         
@@ -113,5 +113,9 @@ public class MapHandler implements TypeHandler {
 
     public boolean canHandle(Class<?> t) {
         return Map.class.isAssignableFrom(t);
+    }
+
+    protected void writeTypeInfoIfNeeded(Object entryValue, Property property, XMLStreamWriter writer) throws XMLStreamException {
+        MarshallerUtils.writeTypeInfoIfNeeded(entryValue.getClass(), property, writer);
     }
 }
