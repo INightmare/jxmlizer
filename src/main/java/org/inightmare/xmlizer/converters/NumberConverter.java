@@ -65,7 +65,7 @@ public class NumberConverter implements PrimitiveConverter {
                 || double.class.isAssignableFrom(type)
                 || float.class.isAssignableFrom(type)
                 || byte.class.isAssignableFrom(type)
-                || short.class.isAssignableFrom(type); // TODO fill in other primitive types
+                || short.class.isAssignableFrom(type);
     }
 
 }

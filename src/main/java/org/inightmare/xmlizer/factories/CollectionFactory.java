@@ -18,6 +18,7 @@ package org.inightmare.xmlizer.factories;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import org.inightmare.xmlizer.BeanFactory;
@@ -35,8 +36,9 @@ public class CollectionFactory implements BeanFactory {
      * @return true if supplied type is java.util.List or java.util.Set
      */
     public boolean canHandle(Class<?> type) {
-        return List.class.equals(type)
-                || Set.class.equals(type);
+        return ArrayList.class.equals(type) || List.class.equals(type)
+                || HashSet.class.equals(type) || Set.class.equals(type)
+                || LinkedList.class.equals(type);
                 
     }
 
@@ -46,10 +48,12 @@ public class CollectionFactory implements BeanFactory {
      * @return new java.util.ArrayList or java.util.HashSet
      */
     public Object instantiate(Class type) {
-        if (List.class.equals(type)) {
+        if (List.class.equals(type) || ArrayList.class.equals(type)) {
             return new ArrayList();
-        } else if (Set.class.equals(type)) {
+        } else if (Set.class.equals(type) || HashSet.class.equals(type)) {
             return new HashSet();
+        } else if (LinkedList.class.equals(type)) {
+            return new LinkedList();
         }
         throw new IllegalArgumentException("Can not instantiate: " + type.getName());
     }

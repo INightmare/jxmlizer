@@ -42,7 +42,7 @@ public class DefaultAccessor implements Accessor {
             Collection collection = (Collection) ReflectionUtils.getProperty(holder, propertyName);
             
             if (collection == null) {
-                collection = CollectionUtils.defaultCollectionImplementationFor(getter.getReturnType());
+                collection = CollectionUtils.defaultCollectionImplementationFor(getter.getReturnType()); // TODO: improve implicit collection support
                 ReflectionUtils.setProperty(holder, propertyName, collection);
             }
             

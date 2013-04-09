@@ -13,36 +13,33 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
+package org.inightmare.xmlizer.converters;
 
-package org.inightmare.xmlizer.factories;
-
-import java.util.HashMap;
-import java.util.Map;
-import org.inightmare.xmlizer.BeanFactory;
+import junit.framework.TestCase;
 
 /**
  *
  * @author giedrius
  */
-public class MapFactory implements BeanFactory {
-
-    /**
-     * 
-     * @param type
-     * @return true if type is equal to java.util.Map
-     */
-    public boolean canHandle(Class<?> type) {
-        return Map.class.equals(type) || HashMap.class.equals(type);
+public class StringConverterTest extends TestCase {
+    
+    private static final String STR = "testString";
+    
+    private StringConverter converter = new StringConverter();
+    
+    public void testEncode() {
+        String result = converter.toString(STR);
+        assertEquals(STR, result);
     }
-
-    /**
-     * Instantiates new map
-     * @param type
-     * @return HashMap instance
-     */
-    public Object instantiate(Class<?> type) {
-        return new HashMap();
+    
+    public void testDecode() {
+        String result = (String) converter.fromString(STR, String.class);
+        assertEquals(STR, result);
     }
-
+    
+    public void testCondition() {
+        assertTrue(converter.canHandle(String.class));
+        assertFalse(converter.canHandle(Object.class));
+    }
     
 }

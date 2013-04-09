@@ -31,7 +31,7 @@ import org.inightmare.xmlizer.handlers.MapHandler;
 
 
 /**
- * Instantiate Marshallers and Unmarshallers.
+ * Factory for Marshallers and Unmarshallers.
  * 
  * @author giedrius
  */

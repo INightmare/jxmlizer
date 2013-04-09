@@ -71,15 +71,6 @@ public class DefaultHandler implements TypeHandler {
         return object;
     }
     
-    private Node findNode(String name, NodeList nodes) {
-        for (int i = 0; i < nodes.getLength(); i++) {
-            if (nodes.item(i).getNodeName().equals(name)) {
-                return nodes.item(i);
-            }
-        }
-        return null;
-    }
-    
     private Property findProperty(String name, List<Property> properties) {
         for (Property prop: properties) {
             if (prop.getName().equals(name)) {
