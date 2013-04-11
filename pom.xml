@@ -7,9 +7,9 @@
         <version>7</version>
     </parent>
     
-    <groupId>org.inightmare</groupId>
+    <groupId>org.inightmare.jxmlizer</groupId>
     <artifactId>jxmlizer</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>jxmlizer</name>
