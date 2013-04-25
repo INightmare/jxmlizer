@@ -22,8 +22,8 @@ import java.lang.reflect.InvocationTargetException;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+import org.inightmare.xmlizer.misc.IndentingXMLStreamWriterDecorator;
 import org.inightmare.xmlizer.reflection.Property;
-import org.inightmare.xmlizer.reflection.ReflectionUtils;
 
 /**
  *
@@ -33,6 +33,7 @@ public class Marshaller {
     
     private WriterContext writerContext = new WriterContext();
     
+    private boolean autoIndent;
     
     Marshaller() {
     }
@@ -47,6 +48,11 @@ public class Marshaller {
             XMLOutputFactory outputFactory = XMLOutputFactory.newFactory();
             outputFactory.setProperty(XMLOutputFactory.IS_REPAIRING_NAMESPACES, true);
             XMLStreamWriter writer = outputFactory.createXMLStreamWriter(outputStream);
+            
+            if (autoIndent) {
+                writer = new IndentingXMLStreamWriterDecorator(writer);
+            }
+            
             writerContext.writer = writer;
             
             writer.writeStartDocument();
@@ -63,6 +69,10 @@ public class Marshaller {
         } catch (InvocationTargetException ex) {
             throw new XmlizerException("Error while trying to read a property", ex);
         } 
+    }
+    
+    public void setAutoIndent(boolean autoIndent) {
+        this.autoIndent = autoIndent;
     }
     
     public void addAlias(Class<?> type, String attributeName, String alias) {

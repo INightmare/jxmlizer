@@ -71,13 +71,13 @@ public class MapHandler implements TypeHandler {
 
         // Write value
         writer.writeStartElement(MAP_VALUE_TAG_NAME);
-        writer.writeStartElement(ReflectionUtils.decapitalize(declaredValueType.getSimpleName()));
+        //writer.writeStartElement(ReflectionUtils.decapitalize(declaredValueType.getSimpleName()));
         Property valueProperty = new Property(ReflectionUtils.decapitalize(valueType.getSimpleName()), valueType);
-        writeTypeInfoIfNeeded( entryValue, property, writer);
+        writeTypeInfoIfNeeded(entryValue, property, writer);
         
         context.writeObject(valueProperty, entry.getValue());
         
-        writer.writeEndElement();
+        //writer.writeEndElement();
         writer.writeEndElement();
     }
 
@@ -98,7 +98,7 @@ public class MapHandler implements TypeHandler {
                     key = context.readObject(new Property(MAP_KEY_TAG_NAME,
                             ReflectionUtils.getFirstGenericType(property.getType())), currentSubNode);
                 } else if (currentSubNode.getNodeName().equals(MAP_VALUE_TAG_NAME)) {
-                    Node valueNode = currentSubNode.getChildNodes().item(0);
+                    Node valueNode = currentSubNode;
 
                     value = context.readObject(new Property(valueNode.getNodeName(),
                             ReflectionUtils.getSecondGenericType(property.getType())), valueNode);
