@@ -36,7 +36,7 @@ public class PolymorphismTest extends AbstractDefaultXmlizerTestCase {
         assertTrue("First book should be of type Book", result.getBooks().get(0).getClass().equals(Book.class));
         assertTrue("Second book should be of type AuthoredBook", result.getBooks().get(1).getClass().equals(AuthoredBook.class));
     }
-
+    
     @Override
     protected void setupUnmarshaller(Unmarshaller unmarshaller) {
         unmarshaller.registerType(Student.class);

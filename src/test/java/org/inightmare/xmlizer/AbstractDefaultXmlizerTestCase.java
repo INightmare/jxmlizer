@@ -54,10 +54,11 @@ public abstract class AbstractDefaultXmlizerTestCase extends TestCase {
     protected Object marshalUnmarshall(Object object) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         marshaller.marshal(object, outputStream);
+        System.out.println(new String(outputStream.toByteArray()));
         return unmarshaller.unmarshal(new ByteArrayInputStream(outputStream.toByteArray()));
     }
     
-    protected void setupMarshaller(Marshaller marshaller) {};
+    protected void setupMarshaller(Marshaller marshaller) { marshaller.setAutoIndent(true); };
     
     protected void setupUnmarshaller(Unmarshaller unmarshaller) {};
     
