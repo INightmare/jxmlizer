@@ -65,7 +65,7 @@ public class MapHandler implements TypeHandler {
     private void writeValue(Map.Entry entry, Property property, XMLStreamWriter writer, WriterContext context) throws XMLStreamException {
         Object entryValue = entry.getValue();
         Class<?> valueType = entryValue.getClass();
-        Class<?> declaredValueType = ReflectionUtils.getSecondGenericType(property.getType());
+        //Class<?> declaredValueType = ReflectionUtils.getSecondGenericType(property.getType());
 
         // TODO: if valueType != declaredType prepend JAXB compatible type information
 
@@ -88,6 +88,11 @@ public class MapHandler implements TypeHandler {
 
         for (int i = 0; i < entryNodes.getLength(); i++) {
             Node currentNode = entryNodes.item(i);
+            
+            if (!"entry".equals(currentNode.getNodeName())) {
+                continue;
+            }
+            
             Object key = null;
             Object value = null;
 

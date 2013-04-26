@@ -16,13 +16,23 @@
 
 package org.inightmare.xmlizer;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import org.inightmare.xmlizer.misc.IndentingXMLStreamWriterDecorator;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
 import org.inightmare.xmlizer.reflection.Property;
 
 /**
@@ -47,11 +57,19 @@ public class Marshaller {
         try {
             XMLOutputFactory outputFactory = XMLOutputFactory.newFactory();
             outputFactory.setProperty(XMLOutputFactory.IS_REPAIRING_NAMESPACES, true);
-            XMLStreamWriter writer = outputFactory.createXMLStreamWriter(outputStream);
+            ByteArrayOutputStream tempOutput = null;
+            XMLStreamWriter writer = null;
             
             if (autoIndent) {
-                writer = new IndentingXMLStreamWriterDecorator(writer);
+                tempOutput = new ByteArrayOutputStream();
+                writer = outputFactory.createXMLStreamWriter(tempOutput);
+            } else {
+                writer = outputFactory.createXMLStreamWriter(outputStream);
             }
+            
+//            if (autoIndent) {
+//                writer = new IndentingXMLStreamWriterDecorator(writer);
+//            }
             
             writerContext.writer = writer;
             
@@ -60,6 +78,17 @@ public class Marshaller {
             marshalObject(writer, object);
             
             writer.writeEndDocument();
+            writer.close();
+            
+            if (autoIndent) {
+                Transformer transformer = TransformerFactory.newInstance().newTransformer();
+                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+                transformer.transform(new StreamSource(new ByteArrayInputStream(tempOutput.toByteArray())), new StreamResult(outputStream));
+            }
+            
+        } catch (TransformerException ex) {
+            throw new XmlizerException("Error whule indenting XML", ex);
         } catch (XMLStreamException ex) {
             throw new XmlizerException("Error occured while writting", ex);
         } catch (IllegalAccessException ex) {
@@ -68,7 +97,7 @@ public class Marshaller {
             throw new XmlizerException("Error while trying to read a property", ex);
         } catch (InvocationTargetException ex) {
             throw new XmlizerException("Error while trying to read a property", ex);
-        } 
+        }
     }
     
     public void setAutoIndent(boolean autoIndent) {
