@@ -51,8 +51,9 @@ public class DefaultHandler implements TypeHandler {
     }
 
     public Object unmarshal(Property property, Node node, ReaderContext context) {
-        List<Property> properties = context.listProperties(property.getSimpleType());
         Class<?> type = determineType(property, node, context);
+        //List<Property> properties = context.listProperties(property.getSimpleType());
+        List<Property> properties = context.listProperties(type);
         Object object = context.instantiate(type);
         
         NodeList childNodes = node.getChildNodes();
