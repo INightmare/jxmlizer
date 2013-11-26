@@ -55,7 +55,7 @@ public class Marshaller {
      */
     public void marshal(Object object, OutputStream outputStream) {
         try {
-            XMLOutputFactory outputFactory = XMLOutputFactory.newFactory();
+            XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
             outputFactory.setProperty(XMLOutputFactory.IS_REPAIRING_NAMESPACES, true);
             ByteArrayOutputStream tempOutput = null;
             XMLStreamWriter writer = null;
