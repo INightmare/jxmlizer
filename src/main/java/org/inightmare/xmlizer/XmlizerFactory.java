@@ -41,7 +41,7 @@ public class XmlizerFactory {
      * Instantiates {@link Unmarshaller} without any
      * converters and factories allowing full customization
      * by the user.
-     * @return 
+     * @return new bare Unmarshaller instance
      */
     public static Unmarshaller createCleanUnmarshaller() {
         return new Unmarshaller();
@@ -51,7 +51,7 @@ public class XmlizerFactory {
      * Instantiates {@link Marshaller} without any
      * converters and factories allowing full customization
      * by the user.
-     * @return 
+     * @return new bare Marshaller instance
      */
     public static Marshaller createCleanMarshaller() {
         return new Marshaller();

@@ -26,14 +26,16 @@ import org.inightmare.xmlizer.reflection.Property;
 public interface Accessor extends ConditionalHandler<Class<?>> {
     
     /**
+     * Called to get a property value from an object.
      * 
-     * @param holder property holder
-     * @param propertyName
+     * @param holder object holding a property
+     * @param propertyName property name
      * @return property value
      */
     Object getProperty(Object holder, String propertyName);
     
     /**
+     * Called to set a property value to an object.
      * 
      * @param holder property holder
      * @param propertyName
@@ -42,7 +44,8 @@ public interface Accessor extends ConditionalHandler<Class<?>> {
     void setProperty(Object holder, String propertyName, Object propertyValue);
     
     /**
-     * List properties for a given type
+     * List properties for a given type. Properties returned must be readable
+     * by @{link Accessor#getProperty(java.lang.Object, java.lang.String)}
      * 
      * @param type
      * @return property list

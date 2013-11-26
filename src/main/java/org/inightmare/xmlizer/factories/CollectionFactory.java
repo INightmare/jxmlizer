@@ -31,6 +31,7 @@ import org.inightmare.xmlizer.BeanFactory;
 public class CollectionFactory implements BeanFactory {
 
     /**
+     * Handles ArrayList, List, HashSet, Set, LinkedList.
      * 
      * @param type
      * @return true if supplied type is java.util.List or java.util.Set

@@ -34,6 +34,15 @@ import org.inightmare.xmlizer.reflection.ReflectionUtils;
  */
 public class DefaultAccessor implements Accessor {
 
+    /**
+     * Called when Xmlizer wants to set a property
+     * 
+     * 
+     * @see Accessor#setProperty(java.lang.Object, java.lang.String, java.lang.Object) 
+     * @param holder object containing the property
+     * @param propertyName property name
+     * @param propertyValue value stored in the property
+     */
     public void setProperty(Object holder, String propertyName, Object propertyValue) {
         Class<?> propertyType = ReflectionUtils.determinePropertyType(holder.getClass(), propertyName);
         
@@ -61,14 +70,36 @@ public class DefaultAccessor implements Accessor {
         }
     }
 
+    /**
+     * List all the readable properties in the object
+     * 
+     * @see Accessor#listProperties(java.lang.Class) 
+     * @param type
+     * @return 
+     */
     public List<Property> listProperties(Class<?> type) {
         return ReflectionUtils.retrieveReadableProperties(type);
     }
 
+    /**
+     * Retrieve property value
+     * 
+     * @see Accessor#getProperty(java.lang.Object, java.lang.String) 
+     * @param holder
+     * @param propertyName
+     * @return 
+     */
     public Object getProperty(Object holder, String propertyName) {
         return ReflectionUtils.getProperty(holder, propertyName);
     }
     
+    /**
+     * Can accessor handle a given type? DefaultAccess can handly any type.
+     * 
+     * @see Accessor#listProperties(java.lang.Class) 
+     * @param type
+     * @return true
+     */
     public boolean canHandle(Class<?> type) {
         return true;
     }
