@@ -29,6 +29,10 @@ public class NumberConverter implements PrimitiveConverter {
     @Override
     public Object fromString(String value, Class type) {
         
+        if (value == null || value.isEmpty()) {
+            return null;
+        }
+        
         BigDecimal convertedValue = new BigDecimal(value);
         
         if (Integer.class.equals(type) || int.class.equals(type)) {

@@ -27,6 +27,9 @@ public class DateConverter implements PrimitiveConverter {
 
     @Override
     public Object fromString(String value, Class type) {
+        if (value == null) {
+            return null;
+        }
         return new Date(Long.parseLong(value));
     }
 
