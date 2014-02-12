@@ -92,6 +92,12 @@ public class Unmarshaller {
         Node rootNode = document.getFirstChild();
         String rootNodeName = rootNode.getNodeName();
         Class<?> rootType = readerContext.typeNamingStrategy.getTypeFromName(readerContext.typeRegistry, rootNodeName);
+        
+        if (rootType == null) {
+            throw new UnmarshallerException("Unable to determine root node type. Please check if the type is registered "
+                    + "or if your custom type naming strategy is correct.");
+        }
+        
         TypeHandler handler = readerContext.handlers.findHandler(rootType);
         
         return handler.unmarshal(new Property(rootNodeName, rootType), rootNode, readerContext);
