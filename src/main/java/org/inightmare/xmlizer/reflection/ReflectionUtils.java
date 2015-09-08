@@ -67,6 +67,22 @@ public class ReflectionUtils {
         return readMethod;
     }
     
+    public static Method retrieveGetter(Class holder, String propertyName, Class propertyType) {
+        Method readMethod = null;
+        String capitalizedName = capitalize(propertyName);
+        try {
+            readMethod = holder.getMethod("get" + capitalizedName, propertyType);
+        } catch (Exception ex) {}
+        
+        if (readMethod == null) {
+            try {
+                readMethod = holder.getMethod("is" + capitalizedName);
+            } catch (Exception ex) {}
+        }
+                
+        return readMethod;
+    }
+    
     public static Method retrieveSetter(Class holder, String propertyName, Class propertyType) {
         Method readMethod = null;
         String capitalizedName = capitalize(propertyName);
@@ -154,11 +170,20 @@ public class ReflectionUtils {
         Method getter = retrieveGetter(target.getClass(), propertyName);
         Method setter = retrieveSetter(target.getClass(), propertyName, getter.getReturnType());
         
-        if (setter == null) {
-            Logger.getLogger("ReflectionUtils").log(Level.SEVERE, "Unable to set property: " + propertyName + " on " + target.getClass().getName());
-            return;
-        }
+        if (checkForMissingSetter(setter, propertyName, target)) return;
         
+        setValue(setter, target, value, propertyName);
+    }
+    
+    public static void setProperty(Object target, String propertyName, Object value, Class propertyType) {
+        Method setter = retrieveSetter(target.getClass(), propertyName, propertyType);
+        
+        if (checkForMissingSetter(setter, propertyName, target)) return;
+        
+        setValue(setter, target, value, propertyName);
+    }
+    
+    private static void setValue(Method setter, Object target, Object value, String propertyName) throws XmlizerException {
         try {
             setter.invoke(target, value); 
         } catch (IllegalAccessException ex) {
@@ -168,6 +193,14 @@ public class ReflectionUtils {
         } catch (InvocationTargetException ex) {
             throw new XmlizerException("Unable to set property " + propertyName + " on " + target.getClass(), ex);
         }
+    }
+    
+    private static boolean checkForMissingSetter(Method setter, String propertyName, Object target) {
+        if (setter == null) {
+            Logger.getLogger("ReflectionUtils").log(Level.SEVERE, "Unable to set property: " + propertyName + " on " + target.getClass().getName());
+            return true;
+        }
+        return false;
     }
     
     public static Object getProperty(Object target, String propertyName) {

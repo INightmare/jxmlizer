@@ -66,7 +66,7 @@ public class DefaultAccessor implements Accessor {
             
             map.putAll((Map)propertyValue);
         } else {
-            ReflectionUtils.setProperty(holder, propertyName, propertyValue);
+            ReflectionUtils.setProperty(holder, propertyName, propertyValue, propertyType);
         }
     }
 
