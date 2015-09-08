@@ -3,7 +3,7 @@
     
     <groupId>org.inightmare.jxmlizer</groupId>
     <artifactId>jxmlizer</artifactId>
-    <version>1.4-SNAPSHOT</version>
+    <version>1.4</version>
     <packaging>jar</packaging>
 
     <name>jxmlizer</name>
@@ -72,7 +72,7 @@
 
     <profiles>
         <profile>
-            <id>release-sign-artifacts</id>
+            <id>ossrh</id>
             <activation>
                 <property>
                     <name>performRelease</name>
@@ -124,7 +124,7 @@
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.3</version>
+                        <version>1.6.6</version>
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>ossrh</serverId>
