@@ -30,7 +30,7 @@ import org.w3c.dom.Node;
  */
 public class Unmarshaller {
  
-    private ReaderContext readerContext = new ReaderContext();
+    private final ReaderContext readerContext = new ReaderContext();
     
     private DocumentBuilder documentBuilder;
 
@@ -95,7 +95,7 @@ public class Unmarshaller {
     public void setNamingStrategy(TypeNamingStrategy namingStrategy) {
         readerContext.typeNamingStrategy = namingStrategy;
     }
-    
+
     public Object unmarshal(Document document) {
         Node rootNode = document.getFirstChild();
         String rootNodeName = rootNode.getNodeName();

@@ -44,7 +44,7 @@ public class DefaultAccessor implements Accessor {
      * @param propertyValue value stored in the property
      */
     public void setProperty(Object holder, String propertyName, Object propertyValue) {
-        Class<?> propertyType = ReflectionUtils.determinePropertyType(holder.getClass(), propertyName);
+        Class<?> propertyType = determinePropertyType(holder, propertyName);
         
         if (Collection.class.isAssignableFrom(propertyType)) {
             Method getter = ReflectionUtils.retrieveGetter(holder.getClass(), propertyName);
@@ -52,15 +52,17 @@ public class DefaultAccessor implements Accessor {
             
             if (collection == null) {
                 collection = CollectionUtils.defaultCollectionImplementationFor(getter.getReturnType()); // TODO: improve implicit collection support
-                ReflectionUtils.setProperty(holder, propertyName, collection);
+                //ReflectionUtils.setProperty(holder, propertyName, collection);
+                setProperty(holder, propertyName, collection);
             }
             
             collection.add(propertyValue);
         } else if (Map.class.isAssignableFrom(propertyType)) {
-            Map map = (Map) ReflectionUtils.getProperty(holder, propertyName);
+            Map map = (Map) getProperty(holder, propertyName);
             
             if (map == null) {
                 map = (Map) propertyValue;
+                //ReflectionUtils.setProperty(holder, propertyName, map);
                 ReflectionUtils.setProperty(holder, propertyName, map);
             }
             
@@ -68,6 +70,10 @@ public class DefaultAccessor implements Accessor {
         } else {
             ReflectionUtils.setProperty(holder, propertyName, propertyValue, propertyType);
         }
+    }
+
+    protected Class determinePropertyType(Object holder, String propertyName) {
+        return ReflectionUtils.determinePropertyType(holder.getClass(), propertyName);
     }
 
     /**

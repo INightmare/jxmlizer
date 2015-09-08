@@ -69,7 +69,6 @@
         </plugins>
     </reporting>
 
-
     <profiles>
         <profile>
             <id>ossrh</id>
