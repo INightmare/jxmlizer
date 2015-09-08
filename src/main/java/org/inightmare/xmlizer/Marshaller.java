@@ -84,6 +84,7 @@ public class Marshaller {
                 Transformer transformer = TransformerFactory.newInstance().newTransformer();
                 transformer.setOutputProperty(OutputKeys.INDENT, "yes");
                 transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+                transformer.setOutputProperty("doctype-public", "yes");
                 transformer.transform(new StreamSource(new ByteArrayInputStream(tempOutput.toByteArray())), new StreamResult(outputStream));
             }
             
