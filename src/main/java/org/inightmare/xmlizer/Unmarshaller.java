@@ -19,6 +19,7 @@ package org.inightmare.xmlizer;
 import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.inightmare.xmlizer.reflection.Property;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -30,8 +31,18 @@ import org.w3c.dom.Node;
 public class Unmarshaller {
  
     private ReaderContext readerContext = new ReaderContext();
+    
+    private DocumentBuilder documentBuilder;
 
     Unmarshaller() {
+        DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+        documentBuilderFactory.setNamespaceAware(true);
+        try {
+            documentBuilder = documentBuilderFactory.newDocumentBuilder();
+        } catch (ParserConfigurationException ex) {
+            throw new XmlizerException("Exception occured during Unmarshaller initialization. "
+                    + "Unable to create new document builder", ex);
+        }
     }
 
     /**
@@ -44,9 +55,6 @@ public class Unmarshaller {
         Object result = null;
 
         try {
-            DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-            documentBuilderFactory.setNamespaceAware(true);
-            DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
             Document document = documentBuilder.parse(inputStream);
             result = unmarshal(document);
         } catch (Exception ex) {
