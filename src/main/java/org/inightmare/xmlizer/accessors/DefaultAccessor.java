@@ -28,14 +28,18 @@ import org.inightmare.xmlizer.reflection.ReflectionUtils;
 /**
  * Default accessor used for serializing and deserializing objects.
  * 
- * Accessor lists and sets properties based on available getters and setters.
+ * Accessor lists and sets properties based on available getters and setters. This
+ * default implementation sets properties based on Java Beans convention with one
+ * additional customization. If property being set is a collection, setting a value
+ * to the property adds it to the collection.
  * 
  * @author giedrius
  */
 public class DefaultAccessor implements Accessor {
 
     /**
-     * Called when Xmlizer wants to set a property
+     * Called when Xmlizer wants to set a property. Supports "setting" (adding) values
+     * to Collection and Map instances.
      * 
      * 
      * @see Accessor#setProperty(java.lang.Object, java.lang.String, java.lang.Object) 
@@ -53,7 +57,7 @@ public class DefaultAccessor implements Accessor {
             if (collection == null) {
                 collection = CollectionUtils.defaultCollectionImplementationFor(getter.getReturnType()); // TODO: improve implicit collection support
                 //ReflectionUtils.setProperty(holder, propertyName, collection);
-                setProperty(holder, propertyName, collection);
+                setPropertyDirect(holder, propertyName, collection);
             }
             
             collection.add(propertyValue);
@@ -62,16 +66,47 @@ public class DefaultAccessor implements Accessor {
             
             if (map == null) {
                 map = (Map) propertyValue;
-                //ReflectionUtils.setProperty(holder, propertyName, map);
-                ReflectionUtils.setProperty(holder, propertyName, map);
+                setPropertyDirect(holder, propertyName, map);
             }
             
             map.putAll((Map)propertyValue);
         } else {
-            ReflectionUtils.setProperty(holder, propertyName, propertyValue, propertyType);
+            setPropertyDirect(holder, propertyName, propertyValue, propertyType);
         }
     }
 
+    /**
+     * Can be overridden to change property setting logic. Unlike {@link DefaultAccessor#setProperty(java.lang.Object, java.lang.String, java.lang.Object)}
+     * this method only sets values using setters.
+     * 
+     * @param holder
+     * @param propertyName
+     * @param propertyValue 
+     */
+    protected void setPropertyDirect(Object holder, String propertyName, Object propertyValue) {
+        ReflectionUtils.setProperty(holder, propertyName, propertyValue);
+    }
+    
+    /**
+     * Can be overridden to change property setting logic. Unlike {@link DefaultAccessor#setProperty(java.lang.Object, java.lang.String, java.lang.Object)}
+     * this method only sets values using setters.
+     * 
+     * @param holder
+     * @param propertyName
+     * @param propertyValue 
+     * @param propertyType
+     */
+    protected void setPropertyDirect(Object holder, String propertyName, Object propertyValue, Class propertyType) {
+        ReflectionUtils.setProperty(holder, propertyName, propertyValue, propertyType);
+    }
+    
+    /**
+     * Allows overriding property type resolution. 
+     * 
+     * @param holder
+     * @param propertyName
+     * @return 
+     */
     protected Class determinePropertyType(Object holder, String propertyName) {
         return ReflectionUtils.determinePropertyType(holder.getClass(), propertyName);
     }
