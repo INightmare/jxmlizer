@@ -183,7 +183,7 @@ public class ReflectionUtils {
         setValue(setter, target, value, propertyName);
     }
     
-    private static void setValue(Method setter, Object target, Object value, String propertyName) throws XmlizerException {
+    public static void setValue(Method setter, Object target, Object value, String propertyName) throws XmlizerException {
         try {
             setter.invoke(target, value); 
         } catch (IllegalAccessException ex) {
