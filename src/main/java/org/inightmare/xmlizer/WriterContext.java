@@ -22,7 +22,6 @@ import javax.xml.stream.XMLStreamWriter;
 import org.inightmare.xmlizer.misc.Aliasor;
 import org.inightmare.xmlizer.misc.DefaultTypeNamingStrategy;
 import org.inightmare.xmlizer.misc.Handlers;
-import org.inightmare.xmlizer.misc.TypeRegistry;
 import org.inightmare.xmlizer.reflection.Property;
 
 /**

@@ -57,7 +57,7 @@ public class ReaderContext {
     }
     
     public void setProperty(Property property, Object holder, Object value) {
-        Accessor accessor = accessors.findHandler(property.getSimpleType());
+        Accessor accessor = accessors.findHandler(holder.getClass());
         accessor.setProperty(holder, property.getName(), value);
     }
     

@@ -87,7 +87,7 @@ public class ReflectionUtils {
         Method readMethod = null;
         String capitalizedName = capitalize(propertyName);
         try {
-            readMethod = holder.getMethod("set" + capitalizedName, propertyType);
+            readMethod = holder.getMethod("set" + capitalizedName, propertyType); 
         } catch (Exception ex) {}
         
                 
