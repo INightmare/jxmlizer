@@ -36,8 +36,8 @@ public class WriterContext {
     XMLStreamWriter writer;
     Aliasor aliasor = new Aliasor();
     TypeNamingStrategy typeNamingStrategy = new DefaultTypeNamingStrategy();
-    
-    
+    XSDPathWriter xsdPathWriter = null;
+
     public void writeObject(Property property, Object object) throws XMLStreamException {
         if (object == null) {
             return;
@@ -55,6 +55,12 @@ public class WriterContext {
                 TypeHandler handler = handlers.findHandler(prop.getSimpleType());
                 handler.marshal(prop, accessor.getProperty(object, prop.getName()), writer, this);
             }
+        }
+    }
+    
+    public void writeXSDPath(Class<?> type) throws XMLStreamException {
+        if (xsdPathWriter != null){
+            xsdPathWriter.writePath(writer, type);
         }
     }
     
