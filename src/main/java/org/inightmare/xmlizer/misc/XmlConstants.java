@@ -22,6 +22,11 @@ package org.inightmare.xmlizer.misc;
  */
 public class XmlConstants {
     
+    public static enum SchemaLocation {
+        noNamespaceSchemaLocation,
+        schemaLocation
+    }
+    
     public static final String XML_SCHEMA_INSTANCE_NAMESPACE = "http://www.w3.org/2001/XMLSchema-instance";
     
     public static final String XML_SCHEMA_INSTANCE_PREFIX = "xsi";

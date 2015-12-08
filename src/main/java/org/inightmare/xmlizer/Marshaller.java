@@ -126,8 +126,8 @@ public class Marshaller {
         writerContext.typeNamingStrategy = namingStrategy;
     }
     
-    public void setXsdPathWriter(XSDPathWriter xsdPathWriter) {
-        writerContext.xsdPathWriter = xsdPathWriter;
+    public void setXsdPathRegistry(XSDPathRegistry xsdPathRegistry) {
+        writerContext.xsdPathRegistry = xsdPathRegistry;
     }
     
     private void marshalObject(XMLStreamWriter writer, Object object)
