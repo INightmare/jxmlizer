@@ -67,7 +67,7 @@ public class WriterContext {
             if (path != null && location != null){
                 writer.writeAttribute(XmlConstants.XML_SCHEMA_INSTANCE_PREFIX,
                                       XmlConstants.XML_SCHEMA_INSTANCE_NAMESPACE,
-                                      location.name(), path);
+                                      location.getLocationAttributeString(), path);
             }
         }
     }
