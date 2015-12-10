@@ -28,29 +28,6 @@ public class XmlConstants {
     
     public static final String XML_TYPE = "type";
     
-    /**
-     * Holds constants representing schemaLocation xml attributes
-     * @author klebedev
-     * @since 2015-12
-     */
-    public static enum SchemaLocation {
-        
-        NO_NAMESPACE_SCHEMA_LOCATION("noNamespaceSchemaLocation"),
-        SCHEMA_LOCATION("schemaLocation");
-        
-        private String locationAttribute;
-        
-        private SchemaLocation(String locationAttribute){
-            this.locationAttribute = locationAttribute;
-        }
-        
-        /**
-         * @return a string to be used as an attribute in XML
-         */
-        public String getLocationAttributeString(){
-            return locationAttribute;
-        }
-        
-    }
+    public static final String NO_NAMESPACE_SCHEMA_LOCATION = "noNamespaceSchemaLocation";
     
 }

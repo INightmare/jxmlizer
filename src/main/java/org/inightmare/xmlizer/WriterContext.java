@@ -17,13 +17,14 @@
 package org.inightmare.xmlizer;
 
 import java.util.List;
+
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+
 import org.inightmare.xmlizer.misc.Aliasor;
 import org.inightmare.xmlizer.misc.DefaultTypeNamingStrategy;
 import org.inightmare.xmlizer.misc.Handlers;
 import org.inightmare.xmlizer.misc.XmlConstants;
-import org.inightmare.xmlizer.misc.XmlConstants.SchemaLocation;
 import org.inightmare.xmlizer.reflection.Property;
 
 /**
@@ -63,11 +64,11 @@ public class WriterContext {
     public void writeXSDPath(Class<?> type) throws XMLStreamException{
         if (xsdPathRegistry != null){
             String path = xsdPathRegistry.getPath(type);
-            SchemaLocation location = xsdPathRegistry.getLocation();
-            if (path != null && location != null){
+            if (path != null){
                 writer.writeAttribute(XmlConstants.XML_SCHEMA_INSTANCE_PREFIX,
                                       XmlConstants.XML_SCHEMA_INSTANCE_NAMESPACE,
-                                      location.getLocationAttributeString(), path);
+                                      XmlConstants.NO_NAMESPACE_SCHEMA_LOCATION,
+                                      path);
             }
         }
     }

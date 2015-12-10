@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.inightmare.xmlizer.XSDPathRegistry;
-import org.inightmare.xmlizer.misc.XmlConstants.SchemaLocation;
 
 /**
  * Default implementation of {@link XSDPathRegistry}</br>
@@ -19,13 +18,6 @@ import org.inightmare.xmlizer.misc.XmlConstants.SchemaLocation;
 public class DefaultXSDPathRegistry implements XSDPathRegistry {
 
     private Map<Class<?>, String> classToPathMap = new LinkedHashMap<Class<?>, String>();
-
-    /**
-     * @return a constant representing noNameSpaceSchemaLocation attribute
-     */
-    public SchemaLocation getLocation() {
-        return SchemaLocation.NO_NAMESPACE_SCHEMA_LOCATION;
-    }
     
     /**
      * Registers provided path as a path to XSD associated with provided type of exported object.
