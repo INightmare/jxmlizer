@@ -28,4 +28,6 @@ public class XmlConstants {
     
     public static final String XML_TYPE = "type";
     
+    public static final String NO_NAMESPACE_SCHEMA_LOCATION = "noNamespaceSchemaLocation";
+    
 }

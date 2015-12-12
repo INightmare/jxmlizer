@@ -126,10 +126,17 @@ public class Marshaller {
         writerContext.typeNamingStrategy = namingStrategy;
     }
     
-    private void marshalObject(XMLStreamWriter writer, Object object) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, XMLStreamException {
-        String name = writerContext.typeNamingStrategy.getTypeName(object.getClass());
+    public void setXsdPathRegistry(XSDPathRegistry xsdPathRegistry) {
+        writerContext.xsdPathRegistry = xsdPathRegistry;
+    }
+    
+    private void marshalObject(XMLStreamWriter writer, Object object)
+                    throws IllegalAccessException, IllegalArgumentException, InvocationTargetException, XMLStreamException {
+        Class<?> type = object.getClass();
+        String name = writerContext.typeNamingStrategy.getTypeName(type);
         writer.writeStartElement(name);
-        writerContext.writeObject(new Property(name, object.getClass()), object);
+        writerContext.writeXSDPath(type);
+        writerContext.writeObject(new Property(name, type), object);
         writer.writeEndElement();
     }
 

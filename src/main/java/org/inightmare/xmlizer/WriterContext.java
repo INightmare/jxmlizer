@@ -17,11 +17,14 @@
 package org.inightmare.xmlizer;
 
 import java.util.List;
+
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+
 import org.inightmare.xmlizer.misc.Aliasor;
 import org.inightmare.xmlizer.misc.DefaultTypeNamingStrategy;
 import org.inightmare.xmlizer.misc.Handlers;
+import org.inightmare.xmlizer.misc.XmlConstants;
 import org.inightmare.xmlizer.reflection.Property;
 
 /**
@@ -36,8 +39,8 @@ public class WriterContext {
     XMLStreamWriter writer;
     Aliasor aliasor = new Aliasor();
     TypeNamingStrategy typeNamingStrategy = new DefaultTypeNamingStrategy();
-    
-    
+    XSDPathRegistry xsdPathRegistry = null;
+
     public void writeObject(Property property, Object object) throws XMLStreamException {
         if (object == null) {
             return;
@@ -54,6 +57,18 @@ public class WriterContext {
             for (Property prop: properties) {
                 TypeHandler handler = handlers.findHandler(prop.getSimpleType());
                 handler.marshal(prop, accessor.getProperty(object, prop.getName()), writer, this);
+            }
+        }
+    }
+    
+    public void writeXSDPath(Class<?> type) throws XMLStreamException{
+        if (xsdPathRegistry != null){
+            String path = xsdPathRegistry.getPath(type);
+            if (path != null){
+                writer.writeAttribute(XmlConstants.XML_SCHEMA_INSTANCE_PREFIX,
+                                      XmlConstants.XML_SCHEMA_INSTANCE_NAMESPACE,
+                                      XmlConstants.NO_NAMESPACE_SCHEMA_LOCATION,
+                                      path);
             }
         }
     }
