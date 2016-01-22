@@ -38,8 +38,8 @@ public interface Accessor extends ConditionalHandler<Class<?>> {
      * Called to set a property value to an object.
      * 
      * @param holder property holder
-     * @param propertyName
-     * @param propertyValue
+     * @param propertyName name of the property (as in JavaBeans)
+     * @param propertyValue value to set
      */
     void setProperty(Object holder, String propertyName, Object propertyValue);
     
@@ -47,7 +47,7 @@ public interface Accessor extends ConditionalHandler<Class<?>> {
      * List properties for a given type. Properties returned must be readable
      * by @{link Accessor#getProperty(java.lang.Object, java.lang.String)}
      * 
-     * @param type
+     * @param type type to list properties for
      * @return property list
      */
     List<Property> listProperties(Class<?> type);

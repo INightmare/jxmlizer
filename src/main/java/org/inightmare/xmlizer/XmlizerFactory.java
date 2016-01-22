@@ -58,9 +58,9 @@ public class XmlizerFactory {
     }
     
     /**
-     * Creates @{link Unmarshaller} with the default configuration
+     * Creates {@link Unmarshaller} with the default configuration
      * 
-     * @return 
+     * @return {@link Unmarshaller} with default configuration for serializing Java Beans
      */
     public static Unmarshaller createDefaultUnmarshaller() {
         Unmarshaller unmarshaller = new Unmarshaller();
@@ -81,7 +81,7 @@ public class XmlizerFactory {
     
     /**
      * Creates {@link Marshaller} with the default configuration
-     * @return 
+     * @return {@link Marshaller} with default configuration for serializing Java Beans
      */
     public static Marshaller createDefaultMarshaller() {
         Marshaller marshaller = new Marshaller();

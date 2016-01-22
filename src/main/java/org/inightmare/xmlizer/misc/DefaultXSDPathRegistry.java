@@ -7,13 +7,14 @@ import java.util.Map.Entry;
 import org.inightmare.xmlizer.XSDPathRegistry;
 
 /**
- * Default implementation of {@link XSDPathRegistry}</br>
- * Uses LinkedHashMap to store type->path associations. </br>
+ * Default implementation of {@link XSDPathRegistry}
+ *
+ * Uses LinkedHashMap to store type-&gt;path associations.
  * 
- * <p><b>This implementation uses isAssignableFrom to find the path so make sure that you register less generic types before more generic ones.</b></p>
+ * This implementation uses isAssignableFrom to find the path so make sure that you register less generic types before more generic ones.
  * 
  * @author klebedev
- * @since 2015SP17
+ * @since 1.6
  */
 public class DefaultXSDPathRegistry implements XSDPathRegistry {
 

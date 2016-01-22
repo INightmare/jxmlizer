@@ -33,7 +33,7 @@ public class CollectionFactory implements BeanFactory {
     /**
      * Handles ArrayList, List, HashSet, Set, LinkedList.
      * 
-     * @param type
+     * @param type collection type
      * @return true if supplied type is java.util.List or java.util.Set
      */
     public boolean canHandle(Class<?> type) {
@@ -45,8 +45,8 @@ public class CollectionFactory implements BeanFactory {
 
     /**
      * 
-     * @param type
-     * @return new java.util.ArrayList or java.util.HashSet
+     * @param type collectopm to instantiate
+     * @return new java.util.ArrayList, java.util.HashSet or java.util.LinkedList
      */
     public Object instantiate(Class type) {
         if (List.class.equals(type) || ArrayList.class.equals(type)) {

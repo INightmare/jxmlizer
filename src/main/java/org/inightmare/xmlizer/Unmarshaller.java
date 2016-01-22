@@ -25,7 +25,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
 /**
- * 
+ * Used to read objects from XML.
+ *
  * @author giedrius
  */
 public class Unmarshaller {
@@ -48,8 +49,8 @@ public class Unmarshaller {
     /**
      * Deserialize XML to an object.
      * 
-     * @param inputStream
-     * @return 
+     * @param inputStream XML source
+     * @return resulting object
      */
     public Object unmarshal(InputStream inputStream) {
         Object result = null;

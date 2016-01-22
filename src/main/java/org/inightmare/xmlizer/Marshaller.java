@@ -33,6 +33,7 @@ import javax.xml.transform.stream.StreamSource;
 import org.inightmare.xmlizer.reflection.Property;
 
 /**
+ * Use to get object XML representation.
  *
  * @author giedrius
  */
@@ -47,8 +48,8 @@ public class Marshaller {
     
     /**
      * Serialize object to XML and output it to given OutputStream
-     * @param object
-     * @param outputStream 
+     * @param object objec to marshal
+     * @param outputStream stream to put the resulting XML to
      */
     public void marshal(Object object, OutputStream outputStream) {
         try {

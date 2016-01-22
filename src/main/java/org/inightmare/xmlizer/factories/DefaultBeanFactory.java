@@ -47,7 +47,7 @@ public class DefaultBeanFactory implements BeanFactory {
 
     /**
      * Can handle all types.
-     * @param t
+     * @param t type
      * @return true
      */
     public boolean canHandle(Class<?> t) {
