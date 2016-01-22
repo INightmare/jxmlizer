@@ -1,4 +1,4 @@
-package org.inightmare.xmlizer.misc;
+package org.inightmare.xmlizer.schema;
 
 import java.io.IOException;
 
@@ -8,11 +8,12 @@ import org.inightmare.xmlizer.Unmarshaller;
 import org.inightmare.xmlizer.XSDPathRegistry;
 import org.inightmare.xmlizer.dataobjects.Book;
 import org.inightmare.xmlizer.dataobjects.Student;
+import org.inightmare.xmlizer.misc.DefaultXSDPathRegistry;
 
 /**
  * A unit test for {@link DefaultXSDPathRegistry} and related code.
  * @author klebedev
- * @since 2015-12
+ * @since 1.6
  */
 public class DefaultXSDPathRegistryTest extends AbstractDefaultXmlizerTestCase {
     
@@ -23,7 +24,7 @@ public class DefaultXSDPathRegistryTest extends AbstractDefaultXmlizerTestCase {
     private static final String BOOK_TITLE = "How to destroy Tokyo. For Dummies";
     
     private XSDPathRegistry pathRegistry = createDefaultXSDPathRegistry();
-    
+
     public void testMarshallingAndUnmarshallingWithXSDPathRegistryAvailable() throws IOException {
         Student gojiraJr = buildStudent(GOJIRA_NAME);
         Student unmGojiraJr = (Student)marshalUnmarshall(gojiraJr);
